@@ -6,9 +6,9 @@
     doc_root: "/var/www/html"
 
   tasks:
-  - name: Install Apache Packages
-    apt: name=apache2 state=present
-
+  - name: install apache2
+     apt: name=apache2 update_cache=yes state=latest
+      
   - name: Start Apache Service 
     service: name=apache2 state=started
 
