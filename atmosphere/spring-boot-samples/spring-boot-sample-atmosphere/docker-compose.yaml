@@ -5,4 +5,4 @@ services:
   atmosphere:
     build: .
     ports:
-      - '30093:8080'
+      - '8099:8080'
