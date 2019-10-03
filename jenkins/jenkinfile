@@ -29,7 +29,7 @@ dir(project_path) {
 		def uploadSpec = """{		
 			"files":[
 			{
-				"pattern":"/var/lib/jenkins/workspace/FinalPipelineDemo/${PROJECT_PATH}/target/*.jar",
+				"pattern":"/root/.jenkins/workspace/greenhouse/${project_path}/target/*.jar",
 				"target":"jenkins/atmosphere/Build #${env.BUILD_NUMBER}"
 			}
 			]
