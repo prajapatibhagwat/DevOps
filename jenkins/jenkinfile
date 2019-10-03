@@ -21,12 +21,13 @@ stage('Maven Package') {
 sh label: 'Testing', script: 'mvn package'
 }
  stage('SonarQube Analysis') { 
-        dir(PROJECT_PATH) {
+        
             withSonarQubeEnv("SonarServer") {
                 sh "mvn sonar:sonar"
                 echo "Sonar Analysis Completed"
-            }    
-        } 
+                
+        }
+}		
     
     /Artifactory Upload
 	stage('Artifactory Upload') {
@@ -61,6 +62,6 @@ sh label: 'Docker', script: 'ansible-playbook -i ../../../ansible/demo03/invento
 }   
    
     
-}    
     
+ }   
 }
