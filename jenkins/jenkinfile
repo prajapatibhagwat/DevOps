@@ -20,7 +20,29 @@ sh label: 'Testing', script: 'mvn test'
 stage('Maven Package') {
 sh label: 'Testing', script: 'mvn package'
 }
-
+ stage('SonarQube Analysis') { 
+        dir(PROJECT_PATH) {
+            withSonarQubeEnv("SonarServer") {
+                sh "mvn sonar:sonar"
+                echo "Sonar Analysis Completed"
+            }    
+        } 
+    
+    /Artifactory Upload
+	stage('Artifactory Upload') {
+		def server = Artifactory.server("ArtifactoryServer")
+		def uploadSpec = """{		
+			"files":[
+			{
+				"pattern":"/var/lib/jenkins/workspace/FinalPipelineDemo/${PROJECT_PATH}/target/*.jar",
+				"target":"jenkins/atmosphere/Build #${env.BUILD_NUMBER}"
+			}
+			]
+			}"""
+		server.upload(uploadSpec)
+        echo "Artifacts Uploaded"
+	}
+    
 stage('Archive Package') {
 archive 'target/*.jar'
 }
